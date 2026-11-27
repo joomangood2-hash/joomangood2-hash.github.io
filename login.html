@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>로그인 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<section class="sec alt" style="min-height:70vh"><div class="wrap">
+ <div class="form-card"><h2>회원 로그인</h2><p class="desc">블록타운 투자회원 전용 서비스입니다.</p>
+  <form id="f"><div class="f"><label>아이디</label><input name="id" autocomplete="username" required></div>
+  <div class="f"><label>비밀번호</label><input name="pw" type="password" autocomplete="current-password" required></div>
+  <label class="chk"><input type="checkbox" name="save">아이디 저장</label>
+  <div class="help err" id="err" style="min-height:20px"></div>
+  <button class="btn btn-p btn-lg" style="width:100%">로그인</button></form>
+  <div class="links"><a href="#" id="findId">아이디 찾기</a>|<a href="#" id="findPw">비밀번호 찾기</a>|<a href="join.html"><b>회원가입</b></a></div>
+  <div style="text-align:center;margin-top:26px;color:var(--sub);font-size:13.5px">간편계정으로 로그인</div>
+  <div class="sns"><button class="kakao" data-sns>카카오 로그인</button><button class="naver" data-sns>네이버 로그인</button></div>
+  <p class="note center">데모 계정: <b>demo</b> / <b>demo1234</b></p>
+ </div></div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ const f=BT.$('#f'); const sv=localStorage.getItem('bt_saveid'); if(sv){f.id.value=sv;f.save.checked=true;}
+ f.onsubmit=e=>{e.preventDefault(); const er=BT.login(f.id.value.trim(),f.pw.value); if(er){BT.$('#err').textContent=er;return;}
+  f.save.checked?localStorage.setItem('bt_saveid',f.id.value.trim()):localStorage.removeItem('bt_saveid');
+  location.href=BT.qs('next')||'mypage.html'; };
+ BT.$$('[data-sns]').forEach(b=>b.onclick=()=>BT.toast('간편 로그인은 실제 서비스 오픈 시 카카오/네이버 API 연동 후 제공됩니다.'));
+ BT.$('#findId').onclick=e=>{e.preventDefault();BT.modal(`<h2>아이디 찾기</h2><div class="f"><label>이름</label><input id="fn"></div><div class="f"><label>휴대폰 번호</label><input id="fp" placeholder="010-0000-0000"></div><button class="btn btn-p" id="fgo">찾기</button><p id="fr" class="mt16"></p>`);
+  BT.$('#fgo').onclick=()=>{const u=BT.users().find(x=>x.name===BT.$('#fn').value.trim()&&x.phone.replace(/-/g,'')===BT.$('#fp').value.replace(/-/g,''));BT.$('#fr').innerHTML=u?`회원님의 아이디는 <b>${BT.esc(u.id.slice(0,Math.max(2,u.id.length-2)))}**</b> 입니다.`:'일치하는 회원 정보가 없습니다.';};};
+ BT.$('#findPw').onclick=e=>{e.preventDefault();BT.modal(`<h2>비밀번호 찾기</h2><div class="f"><label>아이디</label><input id="pi"></div><div class="f"><label>휴대폰 번호</label><input id="pp"></div><button class="btn btn-p" id="pgo">임시 비밀번호 발급</button><p id="pr" class="mt16"></p>`);
+  BT.$('#pgo').onclick=()=>{const u=BT.users().find(x=>x.id===BT.$('#pi').value.trim()&&x.phone.replace(/-/g,'')===BT.$('#pp').value.replace(/-/g,''));if(!u){BT.$('#pr').textContent='일치하는 회원 정보가 없습니다.';return;}const t='bt'+Math.random().toString(36).slice(2,8);u.pw=BT.hash(t);BT.saveUser(u);BT.$('#pr').innerHTML=`임시 비밀번호: <b>${t}</b><br><small>(데모: 실서비스에서는 휴대폰 본인인증 후 문자로 발송)</small>`;};};
+});</script></body></html>

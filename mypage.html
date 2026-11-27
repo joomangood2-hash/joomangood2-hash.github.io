@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>마이페이지 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<script>document.write(BT.subHero('마이페이지','투자 현황과 소득공제 서류, 1:1 문의를 한곳에서 관리하세요.','마이페이지'))</script>
+<section class="sec alt"><div class="wrap my">
+ <aside class="my-nav"><div class="who"><b id="who"></b><div style="font-size:13px;color:var(--sub)" id="whoSub"></div></div>
+  <button data-t="dash" class="on">투자 현황</button><button data-t="tax">소득공제 서류</button><button data-t="fav">관심 상품</button><button data-t="inq">1:1 문의</button><button data-t="prof">회원정보 수정</button><button onclick="BT.logout()">로그아웃</button></aside>
+ <div id="pane"></div>
+</div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ if(!BT.requireLogin()) return;
+ let me=BT.me(); BT.$('#who').textContent=me.name+' 님'; BT.$('#whoSub').textContent=me.id+' · 가입일 '+(me.joined||'');
+ const ST={wait:['상담 대기','wait'],ok:['계약 완료','ok'],run:['운용 중','run'],cancel:['신청 취소','cancel']};
+ const P=BT.$('#pane');
+ const T={
+  dash(){ const l=BT.myInvestments(), act=l.filter(x=>x.status!=='cancel'); const tot=act.reduce((a,b)=>a+b.amount,0); const ref=act.reduce((a,b)=>a+(b.refund||0),0);
+   return `<dl class="stats" style="margin:0 0 24px"><div><dt>투자 신청 금액</dt><dd>${BT.man(tot)}</dd></div><div><dt>예상 소득공제 대상액</dt><dd>${BT.man(BT.deductionRaw(tot))}</dd></div><div><dt>예상 환급액(합계)</dt><dd>${BT.won(ref)}<small>원</small></dd></div><div><dt>진행 건수</dt><dd>${act.length}<small>건</small></dd></div></dl>
+   <div class="box"><h2>투자 신청 내역</h2>${l.length?`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>신청번호</th><th>상품</th><th>투자금액</th><th>예상 환급</th><th>신청일</th><th>상태</th><th></th></tr></thead><tbody>${l.map(x=>`<tr><td>${x.id}</td><td style="text-align:left"><a href="product.html?id=${x.pid}" style="text-decoration:underline">${x.title}</a></td><td><b>${BT.won(x.amount)}원</b></td><td>${x.refund!=null?BT.won(x.refund)+'원':'-'}</td><td>${x.date}</td><td><span class="st ${ST[x.status][1]}">${ST[x.status][0]}</span></td><td>${x.status==='wait'?`<button class="btn btn-o btn-sm" data-cancel="${x.id}">취소</button>`:''}</td></tr>`).join('')}</tbody></table></div>
+   <p class="note">※ 상담 대기 → 계약 완료(납입 확인) → 운용 중 순서로 진행됩니다. 성과배분 및 만기 상환 내역은 운용 개시 후 표시됩니다. 상담 대기 중인 신청만 온라인 취소가 가능합니다.</p>`:`<div class="empty">아직 투자 신청 내역이 없습니다.<br><a class="btn btn-p mt16" href="products.html">투자상품 보기</a></div>`}</div>
+   <div class="box"><h2>성과배분 · 상환 내역</h2><div class="empty">운용 중인 투자가 없습니다. (반기별 운영수익 배분, 매각수익 배분, 만기 상환 내역이 이곳에 표시됩니다.)</div></div>`; },
+  tax(){ const l=BT.myInvestments().filter(x=>x.status!=='cancel'); const reqs=BT.S.get('bt_taxreq',[]).filter(r=>r.uid===me.id);
+   return `<div class="box"><h2>소득공제 서류 발급 요청</h2><p style="color:var(--sub)">투자(납입) 완료 후 연말정산 또는 종합소득세 신고에 필요한 확인서류 발급을 요청할 수 있습니다.</p>
+   ${l.length?`<div class="f mt16"><label>대상 투자</label><select id="tInv">${l.map(x=>`<option value="${x.id}">${x.id} · ${x.title} · ${BT.won(x.amount)}원</option>`).join('')}</select></div><div class="f"><label>공제 신청 과세연도</label><select id="tYear"><option>2026</option><option>2027</option><option>2028</option></select><div class="help">투자일이 속하는 과세연도부터 투자 후 2년이 되는 날이 속하는 과세연도까지 중 1개 연도를 선택할 수 있습니다.</div></div><div class="f"><label>수령 방법</label><select id="tWay"><option>이메일 (PDF)</option><option>우편</option></select></div><button class="btn btn-p" id="tGo">발급 요청</button>`:`<div class="empty">발급 가능한 투자 내역이 없습니다.</div>`}</div>
+   <div class="box"><h2>요청 내역</h2>${reqs.length?`<table class="tbl"><thead><tr><th>요청일</th><th>투자</th><th>과세연도</th><th>수령</th><th>상태</th></tr></thead><tbody>${reqs.map(r=>`<tr><td>${r.date}</td><td>${r.inv}</td><td>${r.year}</td><td>${r.way}</td><td><span class="st wait">처리 대기</span></td></tr>`).join('')}</tbody></table>`:'<div class="empty">요청 내역이 없습니다.</div>'}</div>
+   <div class="box"><h2>신청 방법 안내</h2><ol style="margin-left:18px;line-height:1.9;color:#374055"><li>근로소득자: 회사 연말정산 시 「벤처기업투자신탁 등 소득공제 신청서」와 발급받은 확인서류 제출</li><li>종합소득세 신고 대상: 5월 종합소득세 신고 시 공제 신청</li><li>3년(36개월) 의무보유 — 기간 내 회수 시 감면세액 추징 가능</li></ol><a class="btn btn-o btn-sm mt16" href="calculator.html">소득공제 계산기</a></div>`; },
+  fav(){ const f=BT.S.get('bt_fav',[]), ps=BT.products.filter(p=>f.includes(p.id)); return `<div class="box"><h2>관심 상품</h2>${ps.length?`<div class="grid g2">${ps.map(BT.productCard).join('')}</div>`:'<div class="empty">관심 상품이 없습니다. 상품 상세에서 ♡ 관심을 눌러 추가하세요.</div>'}</div>`; },
+  inq(){ const l=BT.S.get('bt_inq',[]).filter(x=>x.uid===me.id);
+   return `<div class="box"><h2>1:1 문의하기</h2><div class="f"><label>문의 유형</label><select id="qCat"><option>투자 상담</option><option>소득공제</option><option>상품 문의</option><option>회원/기타</option></select></div><div class="f"><label>제목</label><input id="qT"></div><div class="f"><label>내용</label><textarea id="qB"></textarea></div><button class="btn btn-p" id="qGo">문의 등록</button></div>
+   <div class="box"><h2>문의 내역</h2>${l.length?l.map(x=>`<details class="faq-item"><summary>[${BT.esc(x.cat)}] ${BT.esc(x.title)} <span class="st wait" style="margin-left:8px">${x.answer?'답변 완료':'답변 대기'}</span> <small style="color:var(--sub);font-weight:500;margin-left:8px">${x.date}</small></summary><div class="a">${BT.esc(x.body)}</div></details>`).join(''):'<div class="empty">문의 내역이 없습니다.</div>'}</div>`; },
+  prof(){ return `<div class="box"><h2>회원정보 수정</h2><form id="pf"><div class="grid g2" style="gap:0 16px"><div class="f"><label>아이디</label><input value="${BT.esc(me.id)}" disabled></div><div class="f"><label>이름</label><input name="name" value="${BT.esc(me.name)}"></div><div class="f"><label>휴대폰</label><input name="phone" value="${BT.esc(me.phone)}"></div><div class="f"><label>이메일</label><input name="email" value="${BT.esc(me.email)}"></div><div class="f" style="grid-column:1/-1"><label>주소</label><input name="addr" value="${BT.esc(me.addr||'')}"></div></div><label class="chk"><input type="checkbox" name="mkt" ${me.mkt?'checked':''}>신규 상품·이벤트 알림 수신</label><button class="btn btn-p mt8">저장</button></form></div>
+   <div class="box"><h2>비밀번호 변경</h2><div class="grid g2" style="gap:0 16px"><div class="f"><label>현재 비밀번호</label><input type="password" id="p0"></div><div class="f"><label>새 비밀번호</label><input type="password" id="p1"></div></div><button class="btn btn-o" id="pwGo">변경</button></div>
+   <div class="box"><h2>회원 탈퇴</h2><p style="color:var(--sub)">진행 중인 투자가 있는 경우 탈퇴가 제한됩니다.</p><button class="btn btn-o mt8" id="bye" style="color:var(--red)">회원 탈퇴</button></div>`; }
+ };
+ function show(t){ BT.$$('.my-nav [data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===t)); P.innerHTML=T[t](); bind(t); history.replaceState(null,'','#'+t); }
+ function bind(t){
+  BT.$$('[data-cancel]').forEach(b=>b.onclick=()=>{ if(!confirm('투자 신청을 취소하시겠습니까?')) return; const l=BT.investments(); const x=l.find(i=>i.id===b.dataset.cancel); x.status='cancel'; BT.S.set('bt_invest',l); BT.toast('투자 신청이 취소되었습니다.'); show('dash'); });
+  const tg=BT.$('#tGo'); if(tg) tg.onclick=()=>{ const r=BT.S.get('bt_taxreq',[]); r.unshift({uid:me.id,inv:BT.$('#tInv').value,year:BT.$('#tYear').value,way:BT.$('#tWay').value,date:new Date().toISOString().slice(0,10)}); BT.S.set('bt_taxreq',r); BT.toast('서류 발급 요청이 접수되었습니다.'); show('tax'); };
+  const qg=BT.$('#qGo'); if(qg) qg.onclick=()=>{ const t=BT.$('#qT').value.trim(), b=BT.$('#qB').value.trim(); if(!t||!b) return BT.toast('제목과 내용을 입력해 주세요.'); const l=BT.S.get('bt_inq',[]); l.unshift({id:Date.now(),uid:me.id,cat:BT.$('#qCat').value,title:t,body:b,date:new Date().toISOString().slice(0,10),answer:null}); BT.S.set('bt_inq',l); BT.toast('문의가 등록되었습니다.'); show('inq'); };
+  const pf=BT.$('#pf'); if(pf) pf.onsubmit=e=>{ e.preventDefault(); Object.assign(me,{name:pf.name.value,phone:pf.phone.value,email:pf.email.value,addr:pf.addr.value,mkt:pf.mkt.checked}); BT.saveUser(me); BT.toast('회원정보가 저장되었습니다.'); BT.$('#who').textContent=me.name+' 님'; };
+  const pw=BT.$('#pwGo'); if(pw) pw.onclick=()=>{ if(me.pw!==BT.hash(BT.$('#p0').value)) return BT.toast('현재 비밀번호가 일치하지 않습니다.'); if(!/^(?=.*[A-Za-z])(?=.*\d).{8,}$/.test(BT.$('#p1').value)) return BT.toast('새 비밀번호는 영문+숫자 8자 이상입니다.'); me.pw=BT.hash(BT.$('#p1').value); BT.saveUser(me); BT.toast('비밀번호가 변경되었습니다.'); };
+  const by=BT.$('#bye'); if(by) by.onclick=()=>{ if(BT.myInvestments().some(x=>x.status!=='cancel')) return BT.toast('진행 중인 투자 신청이 있어 탈퇴할 수 없습니다.'); if(!confirm('정말 탈퇴하시겠습니까?')) return; BT.S.set('bt_users',BT.users().filter(u=>u.id!==me.id)); BT.logout(); };
+ }
+ BT.$$('.my-nav [data-t]').forEach(b=>b.onclick=()=>show(b.dataset.t));
+ show((location.hash.slice(1) in T)?location.hash.slice(1):'dash');
+});</script></body></html>

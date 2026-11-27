@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>공지사항 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<script>document.write(BT.subHero('공지사항','블록타운 소식과 물건 진행 현황을 투명하게 공개합니다.','공지사항'))</script>
+<section class="sec"><div class="wrap" id="nb"></div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ const id=+BT.qs('id'), R=BT.$('#nb'), cats=['전체','공지','안내','블록 소식','컬럼'];
+ if(id){ const i=BT.notices.findIndex(n=>n.id===id), n=BT.notices[i]; if(!n){R.innerHTML='<div class="empty">게시물이 없습니다.</div>';return;}
+  const pv=BT.notices[i+1], nx=BT.notices[i-1];
+  R.innerHTML=`<div class="view-hd"><span class="badge blue">${n.cat}</span><h2 class="mt8">${n.title}</h2><div style="color:var(--sub);font-size:14px;margin-top:6px">블록타운 운영팀 · ${n.date.replace(/-/g,'.')}</div></div><div class="view-body">${BT.esc(n.body)}</div>
+  <div class="board">${nx?`<a class="row" href="?id=${nx.id}"><span class="num">다음글</span><span></span><span>${nx.title}</span><span class="date">${nx.date}</span></a>`:''}${pv?`<a class="row" href="?id=${pv.id}"><span class="num">이전글</span><span></span><span>${pv.title}</span><span class="date">${pv.date}</span></a>`:''}</div>
+  <div class="center mt24"><a class="btn btn-p" href="notice.html">목록</a></div>`; return; }
+ let cat='전체', q='', page=1, per=10;
+ R.innerHTML=`<div class="tabs" id="ct">${cats.map(c=>`<button data-c="${c}" class="${c==='전체'?'on':''}">${c}</button>`).join('')}</div><div class="search"><input id="q" placeholder="제목·내용 검색"><button class="btn btn-p" id="qs">검색</button></div><div class="board" id="rows"></div><div class="center mt24" id="pg"></div>`;
+ const draw=()=>{ const l=BT.notices.filter(n=>(cat==='전체'||n.cat===cat)&&(!q||(n.title+n.body).includes(q))); const pages=Math.max(1,Math.ceil(l.length/per));
+  BT.$('#rows').innerHTML=l.length?l.slice((page-1)*per,page*per).map(n=>`<a class="row" href="?id=${n.id}"><span class="num">${n.id}</span><span><span class="badge ${n.cat==='공지'?'blue':n.cat==='블록 소식'?'gold':'gray'}">${n.cat}</span></span><span>${n.title}</span><span class="date">${n.date.replace(/-/g,'.')}</span></a>`).join(''):'<div class="empty">검색 결과가 없습니다.</div>';
+  BT.$('#pg').innerHTML=Array.from({length:pages},(_,i)=>`<button class="btn btn-sm ${i+1===page?'btn-p':'btn-o'}" data-p="${i+1}" style="margin:0 3px">${i+1}</button>`).join('');
+  BT.$$('[data-p]').forEach(b=>b.onclick=()=>{page=+b.dataset.p;draw();}); };
+ BT.$$('#ct button').forEach(b=>b.onclick=()=>{BT.$$('#ct button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cat=b.dataset.c;page=1;draw();});
+ BT.$('#qs').onclick=()=>{q=BT.$('#q').value.trim();page=1;draw();}; BT.$('#q').onkeydown=e=>{if(e.key==='Enter')BT.$('#qs').click();};
+ draw();
+});</script></body></html>
