@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<script>document.write(BT.subHero('FAQ','도움되는 질문과 답변들, 개별 문의 전 확인해 주세요.','FAQ'))</script>
+<section class="sec"><div class="wrap" style="max-width:900px">
+ <div class="tabs" id="ct"></div><div class="search"><input id="q" placeholder="궁금한 내용을 검색하세요 (예: 소득공제, 최소 투자)"></div>
+ <div id="list"></div>
+ <div class="cta mt40"><div><h2>원하는 답변을 찾지 못하셨나요?</h2><p>전화 031-786-0070 · 이메일 771703@naver.com · 마이페이지 1:1 문의</p></div><a class="btn btn-w btn-lg" href="mypage.html#inq">1:1 문의하기</a></div>
+</div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ const cats=['전체',...new Set(BT.faqs.map(f=>f.c))]; let cat='전체';
+ BT.$('#ct').innerHTML=cats.map(c=>`<button data-c="${c}" class="${c==='전체'?'on':''}">${c}</button>`).join('');
+ const draw=()=>{ const q=BT.$('#q').value.trim(); const l=BT.faqs.filter(f=>(cat==='전체'||f.c===cat)&&(!q||(f.q+f.a).includes(q)));
+  BT.$('#list').innerHTML=l.length?l.map((f,i)=>`<details class="faq-item"${i===0&&!q?' open':''}><summary>${String(BT.faqs.indexOf(f)+1).padStart(2,'0')}. ${f.q}</summary><div class="a">${f.a}</div></details>`).join(''):'<div class="empty">검색 결과가 없습니다.</div>'; };
+ BT.$$('#ct button').forEach(b=>b.onclick=()=>{BT.$$('#ct button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cat=b.dataset.c;draw();});
+ BT.$('#q').oninput=draw; draw();
+});</script></body></html>

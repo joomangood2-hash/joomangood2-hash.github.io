@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>투자 신청 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<script>document.write(BT.subHero('투자 신청','온라인 신청 후 전문가 상담을 거쳐 계약 및 납입이 진행됩니다.','투자상품 › 투자 신청'))</script>
+<section class="sec"><div class="wrap" style="max-width:820px">
+ <div class="tabs" id="stepTabs"><button class="on">1. 투자금액</button><button>2. 투자자 정보</button><button>3. 확인 및 동의</button><button>4. 신청 완료</button></div>
+ <div id="pinfo" class="box" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"></div>
+ <form id="f" novalidate>
+  <div class="box step" data-s="0"><h2>투자금액 입력</h2>
+   <div class="f"><label>투자금액 (최소 500만원, 100만원 단위)</label><div class="inp"><input name="amt" inputmode="numeric" required><span class="unit">만원</span></div><div class="help" id="amtHelp"></div></div>
+   <div class="f"><label>연 소득 (과세표준, 소득공제 예상용 · 선택)</label><div class="inp"><input name="inc" inputmode="numeric"><span class="unit">만원</span></div></div>
+   <div id="pre" style="background:var(--bg);border-radius:12px;padding:16px"></div>
+   <div class="mt24" style="text-align:right"><button type="button" class="btn btn-p btn-lg" data-next>다음</button></div></div>
+  <div class="box step hide" data-s="1"><h2>투자자 정보</h2>
+   <div class="grid g2" style="gap:0 16px">
+    <div class="f"><label>성명</label><input name="name" required></div>
+    <div class="f"><label>연락처</label><input name="phone" required placeholder="010-0000-0000"></div>
+    <div class="f"><label>생년월일</label><input name="birth" type="date" required></div>
+    <div class="f"><label>이메일</label><input name="email" type="email" required></div>
+    <div class="f" style="grid-column:1/-1"><label>주소</label><input name="addr" required></div>
+    <div class="f"><label>상환·배분금 수령 은행</label><select name="bank" required><option value="">선택</option><option>KB국민</option><option>신한</option><option>우리</option><option>하나</option><option>NH농협</option><option>IBK기업</option><option>카카오뱅크</option><option>토스뱅크</option><option>기타</option></select></div>
+    <div class="f"><label>계좌번호 (본인 명의)</label><input name="acct" required inputmode="numeric"></div>
+    <div class="f"><label>소득 유형</label><select name="itype" required><option value="">선택</option><option>근로소득자 (연말정산)</option><option>사업소득자 (종합소득세 신고)</option><option>기타 종합소득</option></select></div>
+    <div class="f"><label>상담 희망 시간</label><select name="ctime"><option>평일 오전 (09~12시)</option><option>평일 오후 (13~18시)</option><option>전화 전 문자 요청</option></select></div>
+   </div>
+   <div class="agree"><div class="all" style="border:0;margin:0;padding:0">투자자 적합성 확인</div>
+    <label class="chk mt8"><input type="checkbox" name="s1" required>원금 손실 가능성이 있는 투자임을 이해합니다.</label>
+    <label class="chk"><input type="checkbox" name="s2" required>의무보유기간 3년(36개월) 동안 투자금 회수가 제한됨을 이해합니다.</label>
+    <label class="chk"><input type="checkbox" name="s3" required>기본이율 연 0%로 고정 이자가 없고, 성과보수는 사업 실적에 따라 달라짐을 이해합니다.</label></div>
+   <div class="mt24" style="display:flex;justify-content:space-between"><button type="button" class="btn btn-o btn-lg" data-prev>이전</button><button type="button" class="btn btn-p btn-lg" data-next>다음</button></div></div>
+  <div class="box step hide" data-s="2"><h2>신청 내용 확인 및 동의</h2>
+   <dl class="dl" id="review"></dl>
+   <div class="agree mt24"><label class="chk all"><input type="checkbox" id="agAll">전체 동의</label>
+    <label class="chk"><input type="checkbox" class="ag" required>[필수] 투자설명서 및 전환사채 발행 조건을 확인하였습니다.</label>
+    <label class="chk"><input type="checkbox" class="ag" required>[필수] <a href="risk.html" target="_blank" style="text-decoration:underline">투자위험 고지</a>를 읽고 이해하였습니다.</label>
+    <label class="chk"><input type="checkbox" class="ag" required>[필수] 소득공제 적용 여부는 개인별 요건에 따라 다를 수 있음을 확인합니다.</label>
+    <label class="chk"><input type="checkbox" class="ag" required>[필수] 투자 상담을 위한 개인정보 수집·이용에 동의합니다.</label></div>
+   <p class="note">※ 본 신청은 투자 상담 신청이며, 계약 체결 및 투자금 납입은 상담 후 별도로 진행됩니다. 투자금은 반드시 (주)업타운 법인 명의 계좌로만 납입하세요.</p>
+   <div class="mt24" style="display:flex;justify-content:space-between"><button type="button" class="btn btn-o btn-lg" data-prev>이전</button><button type="submit" class="btn btn-b btn-lg">투자 신청하기</button></div></div>
+ </form>
+ <div class="box step hide center" data-s="3" id="done"></div>
+</div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ if(!BT.requireLogin('투자 신청은 회원 로그인 후 이용할 수 있습니다.')) return;
+ const me=BT.me(), p=BT.products.find(x=>x.id===BT.qs('id'))||BT.products[0], f=BT.$('#f');
+ if(p.status!=='open'){ alert('현재 모집 중인 상품이 아닙니다.'); location.href='product.html?id='+p.id; return; }
+ const remain=p.target-BT.raisedOf(p);
+ BT.$('#pinfo').innerHTML=`<div><b style="color:var(--navy);font-size:18px">${p.title}</b> ${p.example?'<span class="badge red">예시</span>':''}<div style="color:var(--sub);font-size:14px">${p.asset} · 잔여 모집금액 ${BT.man(remain)}</div></div><a class="btn btn-o btn-sm" href="product.html?id=${p.id}">상품 보기</a>`;
+ const fm=el=>el.addEventListener('input',()=>{const v=el.value.replace(/[^0-9]/g,'');el.value=v?Number(v).toLocaleString():'';pre();});
+ fm(f.amt); fm(f.inc);
+ f.amt.value=Number(BT.qs('amt')||3000).toLocaleString(); if(BT.qs('inc')) f.inc.value=Number(BT.qs('inc')).toLocaleString();
+ f.name.value=me.name||''; f.phone.value=me.phone||''; f.email.value=me.email||''; f.addr.value=me.addr||''; f.birth.value=me.birth||'';
+ const amt=()=>(parseFloat(f.amt.value.replace(/[^0-9]/g,''))||0)*1e4, inc=()=>(parseFloat(f.inc.value.replace(/[^0-9]/g,''))||0)*1e4;
+ function amtErr(){ const a=amt(); if(a<BT.MIN_INVEST) return '최소 투자금액은 500만원입니다.'; if(a%BT.UNIT_INVEST) return '100만원 단위로 입력해 주세요.'; if(a>remain) return '잔여 모집금액('+BT.man(remain)+')을 초과했습니다.'; return ''; }
+ function pre(){ const e=amtErr(), h=BT.$('#amtHelp'); h.textContent=e; h.className='help'+(e?' err':''); const a=amt(), i=inc();
+  if(e){BT.$('#pre').innerHTML='투자금액을 확인해 주세요.';return;}
+  let s=`투자금액 <b>${BT.man(a)}</b> · 소득공제 대상액 <b>${BT.man(BT.deductionRaw(a))}</b>`;
+  if(i){ const r=BT.calc(i,a); s+=`<br>예상 환급액 <b style="color:var(--blue);font-size:18px">${BT.won(r.refund)}원</b> · 실질 투자금 <b>${BT.man(r.net)}</b>${r.capped?'<br><span style="color:#9a6b00">공제한도(소득의 50%) 적용</span>':''}`; }
+  if(a>5e7) s+='<br><span style="color:#9a6b00">5,000만원 초과분은 소득공제율이 30%로 낮아집니다.</span>';
+  BT.$('#pre').innerHTML=s; }
+ pre();
+ let step=0; const steps=BT.$$('.step'), tabs=BT.$$('#stepTabs button');
+ const go=s=>{ step=s; steps.forEach(x=>x.classList.toggle('hide',+x.dataset.s!==s)); tabs.forEach((t,i)=>t.classList.toggle('on',i===s)); scrollTo({top:0,behavior:'smooth'}); };
+ function validStep(s){ const box=steps[s]; for(const el of BT.$$('[required]',box)){ if(el.type==='checkbox'?!el.checked:!el.value.trim()){ el.focus(); BT.toast(el.type==='checkbox'?'필수 확인 항목에 체크해 주세요.':'필수 항목을 입력해 주세요.'); return false; } }
+  if(s===0&&amtErr()){BT.toast(amtErr());return false;} if(s===1&&!/^01[0-9]-?\d{3,4}-?\d{4}$/.test(f.phone.value)){BT.toast('연락처 형식을 확인해 주세요.');f.phone.focus();return false;} return true; }
+ BT.$$('[data-next]').forEach(b=>b.onclick=()=>{ if(!validStep(step)) return; if(step===1) review(); go(step+1); });
+ BT.$$('[data-prev]').forEach(b=>b.onclick=()=>go(step-1));
+ BT.$('#agAll').onchange=e=>BT.$$('.ag').forEach(c=>c.checked=e.target.checked);
+ function review(){ const a=amt(), i=inc(), r=i?BT.calc(i,a):null;
+  BT.$('#review').innerHTML=`<dt>상품</dt><dd>${p.title}</dd><dt>투자금액</dt><dd><b>${BT.won(a)}원</b></dd><dt>예상 환급액</dt><dd>${r?BT.won(r.refund)+'원 (추정)':'연 소득 미입력'}</dd><dt>성명</dt><dd>${BT.esc(f.name.value)}</dd><dt>연락처</dt><dd>${BT.esc(f.phone.value)}</dd><dt>수령 계좌</dt><dd>${BT.esc(f.bank.value)} ${BT.esc(f.acct.value)}</dd><dt>소득 유형</dt><dd>${BT.esc(f.itype.value)}</dd><dt>만기</dt><dd>${p.maturity.replace(/-/g,'.')} (36개월)</dd>`; }
+ f.onsubmit=e=>{ e.preventDefault(); if(!validStep(2)) return;
+  const a=amt(), i=inc(), r=i?BT.calc(i,a):null;
+  const rec={id:'INV'+Date.now().toString().slice(-8), uid:me.id, pid:p.id, title:p.title, amount:a, income:i||null, refund:r?Math.round(r.refund):null, date:new Date().toISOString().slice(0,10), status:'wait', name:f.name.value, phone:f.phone.value, bank:f.bank.value, acct:f.acct.value, itype:f.itype.value, ctime:f.ctime.value};
+  const l=BT.investments(); l.unshift(rec); BT.S.set('bt_invest',l);
+  BT.$('#done').innerHTML=`<div style="font-size:56px">✅</div><h2 style="justify-content:center">투자 신청이 접수되었습니다</h2><p class="lead-t">신청번호 <b>${rec.id}</b> · ${BT.won(a)}원</p><p style="color:var(--sub)" class="mt8">담당 전문가가 ${BT.esc(rec.ctime)}에 연락드려 투자설명서·계약 및 납입 방법을 안내해 드립니다.<br>투자금은 계약 후 (주)업타운 법인 명의 계좌로만 납입해 주세요.</p><div class="mt24" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><a class="btn btn-p btn-lg" href="mypage.html">마이페이지에서 확인</a><a class="btn btn-o btn-lg" href="products.html">다른 상품 보기</a></div>`;
+  f.classList.add('hide'); go(3); };
+});</script></body></html>
