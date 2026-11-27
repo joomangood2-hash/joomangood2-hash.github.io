@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>물건제안·제휴 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<script>document.write(BT.subHero('물건 제안 · 제휴 문의','경매 물건 제안, 매각 의뢰, 사업 제휴를 기다립니다.','물건제안·제휴'))</script>
+<section class="sec alt"><div class="wrap">
+ <div class="grid g3" style="margin-bottom:32px">
+  <div class="card"><div class="ico">🏠</div><h3>경매 물건 제안</h3><p>권리관계가 명확하고 수익성이 기대되는 경매 물건을 제안해 주세요.</p></div>
+  <div class="card"><div class="ico">🤝</div><h3>사업 제휴</h3><p>법무·세무·중개·자산관리 등 투자자 보호와 운영 효율을 높일 파트너를 찾습니다.</p></div>
+  <div class="card"><div class="ico">🎤</div><h3>세미나·강연 요청</h3><p>경매 투자, 벤처투자 소득공제 구조에 대한 설명회를 요청하실 수 있습니다.</p></div>
+ </div>
+ <div class="form-card" style="max-width:720px"><h2>제안·문의 접수</h2><p class="desc">접수 내용 검토 후 담당자가 연락드립니다.</p>
+ <form id="f"><div class="grid g2" style="gap:0 16px">
+  <div class="f"><label>문의 유형</label><select name="type" required><option value="">선택</option><option>경매 물건 제안</option><option>매각 의뢰</option><option>사업 제휴</option><option>세미나·강연</option><option>기타</option></select></div>
+  <div class="f"><label>회사명/성명</label><input name="name" required></div>
+  <div class="f"><label>연락처</label><input name="phone" required></div><div class="f"><label>이메일</label><input name="email" type="email" required></div>
+  <div class="f" style="grid-column:1/-1"><label>사건번호/소재지 (물건 제안 시)</label><input name="case" placeholder="예) 2026타경00000 / 경기도 ○○시"></div>
+  <div class="f" style="grid-column:1/-1"><label>내용</label><textarea name="body" required></textarea></div></div>
+  <label class="chk"><input type="checkbox" required>[필수] 문의 처리를 위한 개인정보 수집·이용에 동의합니다.</label>
+  <button class="btn btn-p btn-lg mt8" style="width:100%">접수하기</button></form></div>
+</div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{ const f=BT.$('#f'); f.onsubmit=e=>{e.preventDefault(); if(!f.checkValidity()){f.reportValidity();return;} const l=BT.S.get('bt_partner',[]); l.unshift(Object.fromEntries(new FormData(f))); BT.S.set('bt_partner',l); f.reset(); BT.toast('접수되었습니다. 검토 후 연락드리겠습니다. (데모: 브라우저에만 저장)'); }; });</script></body></html>

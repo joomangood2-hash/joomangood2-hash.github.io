@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>투자상품 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<script>document.write(BT.subHero('투자상품','경매 취득 부동산 기반 성과연동형 전환사채(CB) · 최소 투자금 500만원','투자상품'))</script>
+<section class="sec"><div class="wrap">
+  <div class="risk" style="margin-bottom:24px;background:#fffbea;border-color:#f0dca6;color:#6b5312"><b style="color:#9a6b00">안내</b> 현재 표시된 상품은 사이트 화면 구성을 위한 <b>예시 데이터</b>이며 실제 모집 중인 상품이 아닙니다. 상품 상세 정보는 회원 로그인 후 확인할 수 있습니다.</div>
+  <div class="filters" id="flt"><button data-f="all" class="on">전체</button><button data-f="open">모집중</button><button data-f="soon">모집예정</button><button data-f="closed">모집마감</button></div>
+  <div class="grid g3" id="list"></div>
+</div></section>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ const draw=f=>{ const ps=BT.products.filter(p=>f==='all'||p.status===f); BT.$('#list').innerHTML=ps.length?ps.map(BT.productCard).join(''):'<div class="empty" style="grid-column:1/-1">해당 상품이 없습니다.</div>'; };
+ BT.$$('#flt button').forEach(b=>b.onclick=()=>{BT.$$('#flt button').forEach(x=>x.classList.remove('on'));b.classList.add('on');draw(b.dataset.f);});
+ draw('all');
+});</script></body></html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>상품 상세 | 블록타운 - 부동산 경매 조각투자 · 소득공제형 벤처투자</title>
+<meta name="description" content="정부 인증 벤처기업 (주)업타운의 부동산 경매 조각투자 플랫폼 블록타운. 성과연동형 전환사채(CB) 투자로 소득공제(조세특례제한법 제16조)와 성과배분을 함께.">
+<meta property="og:title" content="블록타운 - 부동산 경매 조각투자"><meta property="og:description" content="세금은 돌려받고, 원금은 부동산으로 지키는 벤처투자">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23071B53%22/><text x=%2250%22 y=%2268%22 font-size=%2256%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22900%22>B</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script><script src="assets/js/common.js"></script>
+</head><body>
+<div id="hd"></div>
+<div id="pd"></div>
+<div id="ft"></div>
+<script>document.addEventListener('DOMContentLoaded',()=>{
+ const p=BT.products.find(x=>x.id===BT.qs('id'))||BT.products[0];
+ const [lb,cl]=BT.statusLabel(p.status), raised=BT.raisedOf(p), pct=Math.min(100,Math.round(raised/p.target*100)), me=BT.me();
+ const d=s=>s.replace(/-/g,'.');
+ const fav=()=>BT.S.get('bt_fav',[]);
+ const locked = !me;
+ const lockWrap = (html)=> locked? `<div class="lock"><div class="blur">${html}</div><div class="over"><b style="font-size:18px;color:var(--navy)">🔒 회원 전용 정보입니다</b><span style="color:var(--sub)">기초자산·투자설명서 등 상세 정보는 로그인 후 확인할 수 있습니다.</span><a class="btn btn-p" href="login.html?next=${encodeURIComponent('product.html?id='+p.id)}">로그인</a></div></div>` : html;
+ BT.$('#pd').innerHTML=`
+ <section class="sub-hero" style="background:${p.grad}"><div class="wrap"><div class="crumb">HOME › 투자상품 › 상세</div>
+  <div style="display:flex;gap:6px;margin-bottom:10px"><span class="badge ${cl}">${lb}</span><span class="badge gold">소득공제형</span>${p.example?'<span class="badge red">예시 상품</span>':''}</div>
+  <h1>${p.title}</h1><p>${p.asset} · ${p.type}</p></div></section>
+ <section class="sec"><div class="wrap detail">
+  <div>
+   ${p.example?'<div class="risk" style="margin-bottom:24px;background:#fffbea;border-color:#f0dca6;color:#6b5312"><b style="color:#9a6b00">예시</b> 본 상품 정보는 화면 구성을 위한 예시이며 실제 모집 상품이 아닙니다. 실제 상품 등록 시 대체됩니다.</div>':''}
+   <div class="tabs"><a href="#sum" class="on">상품 요약</a><a href="#point">투자 포인트</a><a href="#asset">기초자산</a><a href="#struct">수익 구조</a><a href="#sched">일정</a><a href="#docs">공시 서류</a><a href="#risk">투자위험</a></div>
+   <div class="box" id="sum"><h2>상품 요약</h2><dl class="dl">
+    <dt>상품 종류</dt><dd>제${p.round||'n'}회 기명식 성과연동형 전환사채(CB)</dd><dt>발행회사</dt><dd>(주)업타운 (벤처기업 · 벤처투자유형)</dd><dt>모집금액</dt><dd>${BT.man(p.target)}</dd>
+    <dt>최소 투자금액</dt><dd><b style="color:var(--blue)">500만원</b> (100만원 단위)</dd><dt>기본 이율</dt><dd>연 0% (매달 고정 이자 없음)</dd>
+    <dt>성과 보수</dt><dd>손익계산서상 당기순이익의 50%를 투자지분 비례 배분 (운영수익 반기별 · 매각수익 처분 시)</dd>
+    <dt>만기</dt><dd>3년 (36개월) · ${d(p.issue)} ~ ${d(p.maturity)} · 만기 시 원금 전액 상환*</dd><dt>전환권</dt><dd>주식 전환 가능 (전환가액 등 세부조건은 투자설명서 참조)</dd>
+    <dt>세제 혜택</dt><dd>벤처투자 소득공제 (조세특례제한법 제16조) · 의무보유 3년</dd></dl>
+    <p class="note">* 원자료 표기 ‘원금 보장’ – 발행 조건상 만기 원금 상환 약정이며, 발행회사의 상환 능력에 따라 원금 손실 가능성이 있습니다.</p></div>
+   <div class="box" id="point"><h2>투자 포인트</h2><ul style="margin-left:18px;line-height:2">${p.points.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+   <div class="box" id="asset"><h2>기초자산 정보</h2>${lockWrap(`<dl class="dl"><dt>물건 유형</dt><dd>${p.type}</dd><dt>소재지</dt><dd>${p.region}</dd><dt>감정가</dt><dd>${p.appraisal?BT.won(p.appraisal)+'원 (예시)':'낙찰 후 공개'}</dd><dt>낙찰가</dt><dd>${p.bid?BT.won(p.bid)+'원 (예시)':'낙찰 후 공개'}</dd><dt>감정가 대비</dt><dd>${p.appraisal&&p.bid?Math.round(p.bid/p.appraisal*100)+'% (예시)':'-'}</dd><dt>운용 계획</dt><dd>임대 등 수익사업 운영 후 매각 (예시)</dd><dt>권리관계</dt><dd>낙찰 후 소유권이전 · 등기 완료 시 공지 (예시)</dd></dl>`)}</div>
+   <div class="box" id="struct"><h2>수익 구조</h2>
+    <div class="cmp"><div><b>운영수익 (반기별)</b><br><span style="color:var(--sub)">임대 등 수익사업 운영으로 발생한 당기순이익의 50%를 투자지분 비례 배분</span></div><div><b>매각수익 (처분 시)</b><br><span style="color:var(--sub)">기초자산 처분 시 매각이익 배분</span></div></div>
+    <div class="share3 mt16"><div class="best"><b>50%</b>만기(3년) 내 매각</div><div><b>20%</b>만기 원금상환 후 매각 시점</div><div class="best"><b>70%</b>만기 연장 후 매각</div></div></div>
+   <div class="box" id="sched"><h2>모집 일정</h2><ul class="timeline"><li><b>${d(p.start)}</b><span>모집 시작 · 온라인 투자 신청 접수</span></li><li><b>${d(p.end)}</b><span>모집 마감 · 상담 및 계약 진행</span></li><li><b>${d(p.issue)}</b><span>전환사채 발행 (투자일 · 소득공제 기준일)</span></li><li><b>반기별</b><span>운영 성과 보고 및 성과보수 배분</span></li><li><b>${d(p.maturity)}</b><span>만기 · 원금 상환 (매각 시 매각이익 배분)</span></li></ul></div>
+   <div class="box" id="docs"><h2>공시 서류</h2>${lockWrap(`<div class="grid g2">${['투자설명서','전환사채 발행 조건','기초자산 감정평가서','등기사항전부증명서','벤처기업확인서','사업자등록증'].map(n=>`<a class="btn btn-o" href="${n==='벤처기업확인서'?'assets/img/venture-certificate.svg':'#'}" ${n==='벤처기업확인서'?'target="_blank"':'onclick="BT.toast(\'실제 상품 등록 시 서류가 업로드됩니다.\');return false"'}>📄 ${n}</a>`).join('')}</div>`)}</div>
+   <div class="risk" id="risk"><b>투자위험 고지</b><ul><li>본 상품은 예금자보호법에 따른 보호 대상이 아니며, 원금 손실이 발생할 수 있습니다.</li><li>성과보수는 사업 실적(당기순이익)에 연동되며 확정 수익이 아닙니다. 기본이율은 연 0%입니다.</li><li>부동산 가격 하락, 임대 공실, 매각 지연, 발행회사의 신용위험 등으로 상환·배분이 지연되거나 불가할 수 있습니다.</li><li>소득공제는 개인별 요건에 따라 적용되지 않을 수 있으며, 의무보유기간(3년) 내 회수 시 감면세액이 추징될 수 있습니다.</li><li>전환사채는 유동성이 낮아 만기 전 중도 회수가 제한됩니다.</li></ul></div>
+  </div>
+  <aside class="side"><div class="card">
+   <div style="display:flex;justify-content:space-between;align-items:center"><span class="badge ${cl}">${lb}</span><button class="btn btn-o btn-sm" id="favBtn">♡ 관심</button></div>
+   <div style="margin-top:14px;color:var(--sub);font-size:14px">모집률</div><div style="font-size:34px;font-weight:900;color:var(--navy)">${pct}%</div>
+   <div class="bar"><i style="width:${pct}%"></i></div>
+   <div style="display:flex;justify-content:space-between;font-size:13.5px;color:var(--sub)"><span>${BT.man(raised)} 모집</span><span>목표 ${BT.man(p.target)}</span></div>
+   <dl class="kv"><div><dt>최소 투자</dt><dd>500만원</dd></div><div><dt>만기</dt><dd>36개월</dd></div><div><dt>성과보수</dt><dd>순이익 50%</dd></div><div><dt>모집 마감</dt><dd>${p.end.slice(5).replace('-','.')}</dd></div></dl>
+   <div class="f mt16"><label>투자 예정 금액</label><div class="inp"><input id="sAmt" inputmode="numeric" value="3,000"><span class="unit">만원</span></div></div>
+   <div class="f"><label>연 소득 (과세표준)</label><div class="inp"><input id="sInc" inputmode="numeric" value="8,000"><span class="unit">만원</span></div></div>
+   <div style="background:var(--bg);border-radius:12px;padding:14px;font-size:14px" id="sRes"></div>
+   ${p.status==='open'?`<a class="btn btn-b btn-lg mt16" style="width:100%" id="goInvest" href="invest.html?id=${p.id}">투자 신청하기</a>`:p.status==='soon'?`<button class="btn btn-p btn-lg mt16" style="width:100%" id="goInvest">사전 상담 예약</button>`:`<button class="btn btn-lg mt16" style="width:100%" disabled>모집 마감</button>`}
+   <a class="btn btn-o mt8" style="width:100%" href="tel:031-786-0070">📞 전화 상담 031-786-0070</a>
+  </div></aside>
+ </div></section>`;
+ const fb=BT.$('#favBtn'); const syncFav=()=>fb.textContent=fav().includes(p.id)?'♥ 관심':'♡ 관심'; syncFav();
+ fb.onclick=()=>{ if(!BT.requireLogin()) return; let f=fav(); f=f.includes(p.id)?f.filter(x=>x!==p.id):[...f,p.id]; BT.S.set('bt_fav',f); syncFav(); BT.toast(f.includes(p.id)?'관심상품에 추가했습니다.':'관심상품에서 제외했습니다.'); };
+ const n=el=>(parseFloat(el.value.replace(/[^0-9]/g,''))||0)*1e4;
+ const upd=()=>{ const a=n(BT.$('#sAmt')), i=n(BT.$('#sInc')); if(a<BT.MIN_INVEST||!i){BT.$('#sRes').innerHTML='<span style="color:var(--red)">최소 투자금액은 500만원입니다.</span>';return;} const r=BT.calc(i,a); BT.$('#sRes').innerHTML=`예상 소득공제 환급 <b style="color:var(--blue);font-size:17px">${BT.won(r.refund)}원</b><br>실질 투자금 <b>${BT.man(r.net)}</b> (투자금 대비 ${(r.ratio*100).toFixed(1)}%)`; };
+ ['sAmt','sInc'].forEach(k=>BT.$('#'+k).addEventListener('input',e=>{const v=e.target.value.replace(/[^0-9]/g,'');e.target.value=v?Number(v).toLocaleString():'';upd();})); upd();
+ const gi=BT.$('#goInvest'); if(gi){ gi.addEventListener('click',e=>{ if(!BT.me()){e.preventDefault(); BT.requireLogin('투자 신청은 회원 로그인 후 이용할 수 있습니다.'); return;} if(p.status==='open'){ gi.href=`invest.html?id=${p.id}&amt=${n(BT.$('#sAmt'))/1e4}&inc=${n(BT.$('#sInc'))/1e4}`; } else { e.preventDefault(); const l=BT.S.get('bt_inq',[]); l.unshift({id:Date.now(),uid:BT.me().id,cat:'사전 상담 예약',title:p.title+' 사전 상담 예약',body:'사전 상담 예약 신청',date:new Date().toISOString().slice(0,10),answer:null}); BT.S.set('bt_inq',l); BT.toast('사전 상담 예약이 접수되었습니다. 마이페이지 > 1:1 문의에서 확인하세요.'); } }); }
+ BT.$$('.tabs a').forEach(a=>a.addEventListener('click',()=>{BT.$$('.tabs a').forEach(x=>x.classList.remove('on'));a.classList.add('on');}));
+ document.title=p.title+' | 블록타운';
+});</script></body></html>
